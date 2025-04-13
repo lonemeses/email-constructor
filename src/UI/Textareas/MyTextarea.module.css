@@ -1,0 +1,19 @@
+.textarea {
+    resize: none;
+    border: 1px solid gray;
+    width: 900px !important;
+    max-height: 200px;
+    font-family: "Montserrat", sans-serif;
+    border-radius: 5px;
+    padding: 5px 5px;
+}
+
+.textarea:hover {
+    border: 1px solid #5a5a5a;
+    box-shadow: 0 0 10px #5a5a5a;
+}
+
+.textarea:focus {
+    outline: none;
+    border: 1px solid #3c3c3c;
+}

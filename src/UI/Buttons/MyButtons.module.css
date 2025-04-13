@@ -1,0 +1,177 @@
+.fab_container {
+    position: relative;
+    width: 40px;
+    height: 100px;
+}
+
+
+.fab_btn {
+    position: absolute;
+    right: 0;
+    top: 40px;
+    border: none;
+    font-size: 20px;
+    color: #313133;
+    cursor: pointer;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    opacity: 0;
+    pointer-events: none;
+}
+
+
+.main_btn {
+    z-index: 2;
+    opacity: 1;
+    pointer-events: auto;
+}
+
+
+.fab_container:hover .main_btn {
+    transform: rotate(360deg);
+    opacity: 0;
+    cursor: auto;
+}
+
+.fab_container:hover .text_btn {
+    transform: translateY(-30px);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.fab_container:hover .image_btn {
+    transform: translateY(30px);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.delete_btn {
+    outline: none;
+    border: none;
+    cursor: pointer;
+    color: #202022;
+    width: 35px;
+    height: 35px;
+    font-size: 24px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 10px;
+}
+
+.delete_btn:hover {
+    background-color: #4e4d4d;
+    color: #b8b8b8;
+}
+.drag_btn {
+    cursor: grab;
+    color: gray;
+}
+.save_btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 10px 16px;
+    margin: 0 10px;
+    border: none;
+    border-radius: 10px;
+    background-color: #70e000;
+    color: #000000;
+    font-family: "Montserrat", sans-serif;
+    font-size: 14px;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: background-color 0.3s ease;
+}
+
+.save_text_hidden, .preview_text {
+    max-width: 0;
+    opacity: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    transition: all 0.5s ease;
+}
+
+.save_text_visible {
+    max-width: 300px;
+    opacity: 1;
+    overflow: hidden;
+    white-space: nowrap;
+    transition: all 0.5s ease;
+}
+.save_btn:hover {
+    background-color: #008000;
+}
+.preview_btn:hover {
+    background-color: #0c0c0c;
+}
+
+
+.save_btn:hover .save_text_hidden {
+    max-width: 300px;
+    opacity: 1;
+    font-weight: bolder;
+}
+.preview_btn:hover .preview_text {
+    max-width: 300px;
+    opacity: 1;
+    font-weight: bolder;
+}
+.save_icon {
+    font-size: 25px;
+    color: #002511;
+}
+.preview_icon {
+    font-size: 25px;
+    color: #757575;
+}
+.save_btn:hover .save_icon {
+    color: #000000;
+}
+
+.preview_btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 10px;
+    background-color: #2b2b2b;
+    color: #757575;
+    font-family: "Montserrat", sans-serif;
+    font-size: 14px;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: background-color 0.3s ease;
+}
+
+.close_btn {
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    cursor: pointer;
+}
+
+.close_icon {
+    font-size: 25px;
+}
+
+.sidebar_btn {
+    outline: none;
+    border: none;
+    color: #999999;
+    background-color: transparent;
+    font-size: 24px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.sidebar_btn:hover {
+    color: white;
+}
