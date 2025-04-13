@@ -82,7 +82,7 @@
 .previewContent {
     transform: scale(0.5);
     transform-origin: top left;
-    width: 600px; /* Ширина оригинального шаблона */
+    width: 600px;
     background: white;
     padding: 20px;
     border: 1px solid #ccc;
