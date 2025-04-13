@@ -1,6 +1,6 @@
 import React, {useRef} from 'react';
 import styles from "./MyTextarea.module.css"
-const MyTextarea = (props) => {
+const MyTextarea = ({value, onChange}) => {
     const ref = useRef(null);
     const autoResize = () => {
         ref.current.style.height = "auto";
@@ -8,7 +8,7 @@ const MyTextarea = (props) => {
     }
 
     return (
-        <textarea ref={ref} className={styles.textarea} onInput={autoResize} {...props} value={props.value} onChange={e => props.onChange(e.currentTarget.value)} />
+        <textarea ref={ref} className={styles.textarea} onInput={autoResize} value={value} onChange={e => onChange(e.currentTarget.value)} />
     );
 };
 

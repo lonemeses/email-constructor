@@ -14,34 +14,37 @@ import UpdateModal from "./components/Modal/UpdateModal.jsx";
 
 
 const App = () => {
-    const [templates, setTemplates] = useState([]);
-    const [isUpdate, setIsUpdate] = useState(false);
-    const [isPending, setIsPending] = useState(false);
-    const [isSideActive, setIsSideActive] = useState(true);
-    const [selectedTemplate, setSelectedTemplate] = useState([]);
-    const [blocks, setBlocks] = useState([]);
-    const [isModal, setIsModal] = useState(false)
-    const [modalType, setModalType] = useState(null)
-    const getPos = id => blocks.findIndex(block => block.id === id);
-
+    const [templates, setTemplates] = useState([]); //State который хранит в себе шаблоны готовые шаблоны
+    const [isUpdate, setIsUpdate] = useState(false); //true - если шаблон в редактировании
+    const [isPending, setIsPending] = useState(false); //true - если промис в состоянии pending
+    const [isSideActive, setIsSideActive] = useState(true);// состояние открытия/закрытия сайдбара
+    const [selectedTemplate, setSelectedTemplate] = useState([]);//зранит выбранный в сайдбаре шаблон
+    const [blocks, setBlocks] = useState([]);//структура шаблона
+    const [isModal, setIsModal] = useState(false)//состояние модального окна
+    const [modalType, setModalType] = useState(null)//тип модального окна
+    const getPos = id => blocks.findIndex(block => block.id === id);//функция для вычисления позиции для Dnd-kit
+    //функция открытия модального окна
     const openModal = (type) => {
         setModalType(type)
         setIsModal(true)
     }
+    // функция включения редактирования шаблона
     const editBtnClick = () => {
         setModalType(null)
         setIsModal(false)
         setIsUpdate(true)
         setBlocks(selectedTemplate.data)
     }
+    //функция закрытия модального окна
     const closeModal = () => {
         setModalType(null)
         setIsModal(false)
     }
-
+    //функция сохранения шаблона
     const saveTemplate = async (name) => {
         setIsPending(true)
         let newTemplates
+        //проверка редактируется готовый шаблон, или создаётся новый
         if (isUpdate) {
             newTemplates = templates.map((template) =>
                 template.id === selectedTemplate.id
@@ -69,12 +72,13 @@ const App = () => {
             console.log(e)
         }
     }
+    //функция нажатия на мини-карточку шаблона
     const cardClick = (template) => {
         setIsModal(true)
         setModalType('edit')
         setSelectedTemplate(template)
     }
-
+    //сенсоры для dnd
     const sensors = useSensors(
         useSensor(MouseSensor, {
             activationConstraint: {
@@ -83,6 +87,7 @@ const App = () => {
             }
         })
     )
+    //функция для окончания перетаскивания
     const handleDragOver = (event) => {
         const {active, over} = event;
 
