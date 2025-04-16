@@ -9,12 +9,12 @@ const SideBar = ({active, onClick, templates}) => {
                 <div className={styles.side_title}>
                     Ваши шаблоны
                 </div>
-                <div className={styles.side_list}>
+                <div>
                     {templates.map(template =>
                         <TemplateCard template={template} onClick={onClick} key={template.id}/>
                     )}
                 </div>
-                <div style={{height: "80px", opacity: 0, pointerEvents: 'none'}}/>
+                <div className={styles.side_plug}/>
             </div>
 
         </div>

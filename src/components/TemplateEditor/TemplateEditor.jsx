@@ -1,46 +1,67 @@
 import React from 'react';
 import styles from './TemplateEditor.module.css'
-import AddButton from "../../UI/Buttons/AddButton.jsx";
 import EditorElement from "./EditorElement.jsx";
 import {SortableContext, verticalListSortingStrategy} from "@dnd-kit/sortable";
-import PreviewSaveButton from "../../UI/Buttons/PreviewSaveButton.jsx";
+import HoveringBigButtons from "../../UI/Buttons/HoveringBigButtons.jsx";
+import ButtonList from "../../UI/Buttons/ButtonList.jsx";
 
 
-const TemplateEditor = ({blocks, setBlocks, openModalFunc, isUpdate, isPending}) => {
+const TemplateEditor = ({blocks, setBlocks, openModalFunc, isUpdate, isPending, cancelEdit}) => {
 
     const deleteItem = (id) => {
         setBlocks(blocks.filter(block => block.id !== id));
     }
 
+    const addHeadings = (id, newType) => {
+        setBlocks(prev => prev.map(block => block.id === id ? block.text.push({type: newType, children: [{text: ''}]}) : null))
+    }
+
     const handleTextChange = (id, newText) => {
-        setBlocks(prev => prev.map(block => block.id === id ? {...block, text: newText} : block))
+        const copied = JSON.parse(JSON.stringify(newText));
+        console.log(copied)
+        setBlocks(prev => prev.map(block => block.id === id ? {...block, text: copied} : block))
+    }
+    const labelTextChange = (id, newText) => {
+        setBlocks(prev => prev.map(block => block.id === id ? {...block, label: newText} : block))
     }
 
     return (
-        <div className={isPending ? styles.container_disable : styles.container}>
+        <div className={`${styles.container} ${isPending ? styles.container_disable : ''}`}>
             <div className={styles.header}>
                 Редактор
             </div>
             <div className={styles.form_content}>
                 <SortableContext items={blocks.map(b => b.id)} strategy={verticalListSortingStrategy}>
                     {blocks.map(block =>
-                        <EditorElement handleTextChange={handleTextChange} block={block} deleteItem={deleteItem} key={block.id}/>
+                        <EditorElement
+                            labelTextChange={labelTextChange}
+                            changeType={addHeadings}
+                            handleTextChange={handleTextChange}
+                            block={block}
+                            deleteItem={deleteItem}
+                            key={block.id}
+                        />
                     )}
                 </SortableContext>
             </div>
             <div className={styles.btns_container}>
-                <AddButton addFunc={setBlocks}/>
+                <ButtonList addFunc={setBlocks} openModal={openModalFunc}/>
             </div>
             {blocks.length > 0 &&
             <div className={styles.end_btns}>
-                <PreviewSaveButton type={'preview'} clickFunc={() => openModalFunc('preview')}>
+                <HoveringBigButtons type={'preview'} clickFunc={() => openModalFunc('preview')}>
                     Предпросмотр шаблона
-                </PreviewSaveButton>
-                <PreviewSaveButton
+                </HoveringBigButtons>
+                {isUpdate &&
+                    <HoveringBigButtons type={'cancel'} clickFunc={cancelEdit}>
+                        Отменить редактирование
+                    </HoveringBigButtons>
+                }
+                <HoveringBigButtons
                     type={"save"}
-                    clickFunc={isUpdate ? () => {openModalFunc('update')} : () => openModalFunc('save')} variant={"hidden"}>
+                    clickFunc={isUpdate ? () => {openModalFunc('update')} : () => openModalFunc('save')}>
                     Сохранить шаблон
-                </PreviewSaveButton>
+                </HoveringBigButtons>
             </div>
             }
         </div>

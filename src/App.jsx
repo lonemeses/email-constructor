@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import Header from "./components/Header/Header.jsx";
 import './App.css'
 import TemplateEditor from "./components/TemplateEditor/TemplateEditor.jsx";
-import {closestCorners, DndContext, MouseSensor, useSensor, useSensors} from "@dnd-kit/core";
+import {closestCenter, DndContext, MouseSensor, useSensor, useSensors} from "@dnd-kit/core";
 import {arrayMove} from "@dnd-kit/sortable";
 import Modal from "./components/Modal/Modal.jsx";
 import TemplatePreview from "./components/TemplatePreview/TemplatePreview.jsx";
@@ -11,13 +11,15 @@ import {fakeAxiosPostTemplate} from "./httpEmulation/index.js";
 import {toast, ToastContainer} from "react-toastify";
 import SideBar from "./components/SideBar/SideBar.jsx";
 import UpdateModal from "./components/Modal/UpdateModal.jsx";
+import ImageUploader from "./components/Modal/ImageUploader.jsx";
+import {restrictToVerticalAxis} from "@dnd-kit/modifiers";
 
 
 const App = () => {
     const [templates, setTemplates] = useState([]); //State который хранит в себе шаблоны готовые шаблоны
     const [isUpdate, setIsUpdate] = useState(false); //true - если шаблон в редактировании
     const [isPending, setIsPending] = useState(false); //true - если промис в состоянии pending
-    const [isSideActive, setIsSideActive] = useState(true);// состояние открытия/закрытия сайдбара
+    const [isSideActive, setIsSideActive] = useState(false);// состояние открытия/закрытия сайдбара
     const [selectedTemplate, setSelectedTemplate] = useState([]);//зранит выбранный в сайдбаре шаблон
     const [blocks, setBlocks] = useState([]);//структура шаблона
     const [isModal, setIsModal] = useState(false)//состояние модального окна
@@ -39,6 +41,11 @@ const App = () => {
     const closeModal = () => {
         setModalType(null)
         setIsModal(false)
+    }
+    const cancelEdit = () => {
+        setBlocks([])
+        setSelectedTemplate([])
+        setIsUpdate(false)
     }
     //функция сохранения шаблона
     const saveTemplate = async (name) => {
@@ -104,17 +111,46 @@ const App = () => {
 
     return (
         <div className='app'>
-            <DndContext collisionDetection={closestCorners} onDragEnd={handleDragOver} sensors={sensors}>
+            <DndContext
+                collisionDetection={closestCenter}
+                onDragEnd={handleDragOver}
+                sensors={sensors}
+                modifiers={[restrictToVerticalAxis]}
+            >
                 {isModal &&
                     <Modal onClose={closeModal} >
-                        {modalType === 'preview' && <TemplatePreview blocks={blocks} name={"Предпросмотр шаблона"}/> }
-                        {modalType === 'edit' && <TemplatePreview blocks={selectedTemplate.data} name={selectedTemplate.name} isEdit={true} onClick={editBtnClick}/>}
-                        {modalType === 'save' && <SaveModal onSave={saveTemplate}/>}
-                        {modalType === 'update' && <UpdateModal prevName={selectedTemplate.name} onSave={saveTemplate}/>}
+                        {modalType === 'preview' && <TemplatePreview
+                            blocks={blocks}
+                            name={"Предпросмотр шаблона"}
+                        /> }
+                        {modalType === 'edit' && <TemplatePreview
+                            blocks={selectedTemplate.data}
+                            name={selectedTemplate.name}
+                            isEdit={true}
+                            onClick={editBtnClick}
+                        />}
+                        {modalType === 'save' && <SaveModal
+                            onSave={saveTemplate}
+                        />}
+                        {modalType === 'update' && <UpdateModal
+                            prevName={selectedTemplate.name}
+                            onSave={saveTemplate}
+                        />}
+                        {modalType === 'image' && <ImageUploader
+                            addFunc={setBlocks}
+                            closeModal={closeModal}
+                        />}
                     </Modal>}
                 <Header menuActive={isSideActive} setMenuActive={setIsSideActive}/>
                 <ToastContainer style={{top: "50px"}}/>
-                <TemplateEditor blocks={blocks} setBlocks={setBlocks} openModalFunc={openModal} isUpdate={isUpdate} isPending={isPending}/>
+                <TemplateEditor
+                    blocks={blocks}
+                    setBlocks={setBlocks}
+                    openModalFunc={openModal}
+                    isUpdate={isUpdate}
+                    isPending={isPending}
+                    cancelEdit={cancelEdit}
+                />
             </DndContext>
             <SideBar active={isSideActive} templates={templates} onClick={cardClick}/>
         </div>

@@ -5,7 +5,7 @@ import styles from "./MyButtons.module.css"
 const CloseButton = ({onClick}) => {
     return (
         <div onClick={onClick} className={styles.close_btn}>
-            <IoClose className={styles.close_icon} />
+            <IoClose className={styles.icon} />
         </div>
     );
 };

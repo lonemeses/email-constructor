@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './SideBar.module.css'
+import TextPreview from "../TemplatePreview/TextPreview.jsx";
 
 const TemplateCard = ({template, onClick}) => {
     return (
@@ -8,7 +9,7 @@ const TemplateCard = ({template, onClick}) => {
                 <div className={styles.previewContent}>
                     {template.data.map(block => (
                         <div key={block.id} className={styles.block}>
-                            {block.type === 'text' && <p className={styles.block_p}>{block.text}</p>}
+                            {block.type === 'text' && <TextPreview value={block.text}/>}
                             {block.type === 'image' && <img className={styles.block_img} src={block.src} alt="preview"/>}
                         </div>
                     ))}
