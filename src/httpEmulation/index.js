@@ -75,23 +75,3 @@ export const postTemplate = (name) => {
     }
 }
 
-export const getOneTemplate = (id) => {
-    return (dispatch, getState) => {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                const template = getState().templates.find(item => item.id === id)
-                if (template) {
-                    resolve({
-                        status: 200,
-                        data: template
-                    })
-                } else {
-                    reject({
-                        status: 400,
-                        message: 'Не удалось получить шаблон'
-                    })
-                }
-            })
-        })
-    }
-}
