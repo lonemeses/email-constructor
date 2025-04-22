@@ -1,24 +1,44 @@
 import React from 'react';
 import styles from "./TemplatePreview.module.css"
-import PreviewSaveButton from "../../UI/Buttons/PreviewSaveButton.jsx";
-const TemplatePreview = ({blocks, name, isEdit, onClick}) => {
-
-    const template = [blocks]
-
+import HoveringBigButtons from "../../UI/Buttons/HoveringBigButtons.jsx";
+import TextPreview from "./TextPreview.jsx";
+import ImagePreview from "./ImagePreview.jsx";
+import {useDispatch, useSelector} from "react-redux";
+import {uiSlice} from "../../store/Slices/uiSlice.js";
+import {editorSlice} from "../../store/Slices/editorSlice.js";
+const TemplatePreview = () => {
+    const {blocks, isUpdate, selectedTemplate} = useSelector(state => state.editor)
+    const {setModal} = uiSlice.actions
+    const {setBlocks} = editorSlice.actions
+    const dispatch = useDispatch();
+    let componentBlocks
+    if(selectedTemplate !== null) {
+        componentBlocks = selectedTemplate.template
+    } else {
+        componentBlocks = blocks
+    }
+    const btnClick = () => {
+        dispatch(setModal(null))
+        dispatch(setBlocks(componentBlocks))
+    }
     return (
         <div className={styles.preview_container}>
-            <h3>{name}</h3>
-            {blocks.map(block =>
+            <h3>Предпросмотр шаблона</h3>
+            {componentBlocks.map(block =>
                 <div key={block.id}>
-                    {block.type === 'text' && <div className={styles.preview_text}><p >{block.text}</p></div>}
-                    {block.type === 'image' && <div ><img src={block.src} alt={block.src} className={styles.preview_img}/></div>}
+                    {block.type === 'text' && (
+                        <div className={styles.preview_text}>
+                            <TextPreview value={block.text} />
+                        </div>
+                    )}
+                    {block.type === 'image' && <ImagePreview block={block} />}
                 </div>
             )}
-            {isEdit &&
+            {isUpdate &&
             <div className={styles.end_btns}>
-                <PreviewSaveButton type={'edit'} variant={"hidden"} clickFunc={() => onClick(template)}>
+                <HoveringBigButtons type={'edit'} clickFunc={btnClick}>
                     Редактировать шаблон
-                </PreviewSaveButton>
+                </HoveringBigButtons>
             </div>}
         </div>
     );

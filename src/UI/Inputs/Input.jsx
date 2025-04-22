@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from "prop-types";
 import styles from './MyInput.module.css'
 
-const MyInput = ({placeholder, value, onChange, id}) => {
+const Input = ({placeholder, value, onChange, id}) => {
     return (
         <div className={styles.input_container}>
 
@@ -14,11 +14,11 @@ const MyInput = ({placeholder, value, onChange, id}) => {
     );
 };
 
-MyInput.propTypes = {
+Input.propTypes = {
     placeholder: PropTypes.string.isRequired,
     value: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired,
     id: PropTypes.string.isRequired,
 }
 
-export default MyInput;
+export default Input;

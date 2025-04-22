@@ -1,6 +1,6 @@
 import React, {useRef} from 'react';
 import styles from "./MyTextarea.module.css"
-const MyTextarea = ({value, onChange}) => {
+const Textarea = ({value, onChange}) => {
     const ref = useRef(null);
     const autoResize = () => {
         ref.current.style.height = "auto";
@@ -12,4 +12,4 @@ const MyTextarea = ({value, onChange}) => {
     );
 };
 
-export default MyTextarea;
+export default Textarea;

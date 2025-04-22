@@ -12,16 +12,6 @@
 }
 
 .container_disable {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    margin: 30px auto;
-    border: 1px solid #313133;
-    border-radius: 5px;
-    max-width: 1000px;
-    min-height: 600px;
-    padding: 20px;
-    box-sizing: border-box;
     opacity: 0.5;
     pointer-events: none;
 }
@@ -31,10 +21,6 @@
     font-family: "Montserrat", sans-serif;
     margin-bottom: 20px;
     text-align: center;
-}
-
-.form_content {
-
 }
 
 .form_elem {
