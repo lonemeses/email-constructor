@@ -4,26 +4,34 @@ import EditorElement from "./EditorElement.jsx";
 import {SortableContext, verticalListSortingStrategy} from "@dnd-kit/sortable";
 import HoveringBigButtons from "../../UI/Buttons/HoveringBigButtons.jsx";
 import ButtonList from "../../UI/Buttons/ButtonList.jsx";
+import {editorSlice} from "../../store/Slices/editorSlice.js";
+import {useDispatch, useSelector} from "react-redux";
+import {uiSlice} from "../../store/Slices/uiSlice.js";
 
 
-const TemplateEditor = ({blocks, setBlocks, openModalFunc, isUpdate, isPending, cancelEdit}) => {
+const TemplateEditor = () => {
+    const {blocks, isUpdate} = useSelector(state => state.editor)
+    const {isPending} = useSelector(state => state.ui)
+    const {  addBlock, setBlocks, setSelectedTemplate, setIsUpdate} = editorSlice.actions
+    const {setModal} = uiSlice.actions
+    const dispatch = useDispatch();
 
-    const deleteItem = (id) => {
-        setBlocks(blocks.filter(block => block.id !== id));
+    const addNewBlock = (type) => {
+        dispatch(addBlock({
+            type: 'text',
+            id: blocks.length + 1,
+            text: [{type: type, children: [{text: ''}]}]
+        }))
+    }
+    const openModalFunc = (type) => {
+        dispatch(setModal(type))
+    }
+    const cancelEdit = () => {
+        dispatch(setBlocks([]))
+        dispatch(setSelectedTemplate(null))
+        dispatch(setIsUpdate(false))
     }
 
-    const addHeadings = (id, newType) => {
-        setBlocks(prev => prev.map(block => block.id === id ? block.text.push({type: newType, children: [{text: ''}]}) : null))
-    }
-
-    const handleTextChange = (id, newText) => {
-        const copied = JSON.parse(JSON.stringify(newText));
-        console.log(copied)
-        setBlocks(prev => prev.map(block => block.id === id ? {...block, text: copied} : block))
-    }
-    const labelTextChange = (id, newText) => {
-        setBlocks(prev => prev.map(block => block.id === id ? {...block, label: newText} : block))
-    }
 
     return (
         <div className={`${styles.container} ${isPending ? styles.container_disable : ''}`}>
@@ -34,18 +42,14 @@ const TemplateEditor = ({blocks, setBlocks, openModalFunc, isUpdate, isPending, 
                 <SortableContext items={blocks.map(b => b.id)} strategy={verticalListSortingStrategy}>
                     {blocks.map(block =>
                         <EditorElement
-                            labelTextChange={labelTextChange}
-                            changeType={addHeadings}
-                            handleTextChange={handleTextChange}
                             block={block}
-                            deleteItem={deleteItem}
                             key={block.id}
                         />
                     )}
                 </SortableContext>
             </div>
             <div className={styles.btns_container}>
-                <ButtonList addFunc={setBlocks} openModal={openModalFunc}/>
+                <ButtonList addFunc={addNewBlock} openModal={openModalFunc}/>
             </div>
             {blocks.length > 0 &&
             <div className={styles.end_btns}>
@@ -59,7 +63,7 @@ const TemplateEditor = ({blocks, setBlocks, openModalFunc, isUpdate, isPending, 
                 }
                 <HoveringBigButtons
                     type={"save"}
-                    clickFunc={isUpdate ? () => {openModalFunc('update')} : () => openModalFunc('save')}>
+                    clickFunc={() => openModalFunc('save')}>
                     Сохранить шаблон
                 </HoveringBigButtons>
             </div>

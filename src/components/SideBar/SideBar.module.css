@@ -12,11 +12,11 @@
 }
 
 .side_wrapper_active {
-    position: fixed;
+    position: absolute;
     overflow-y: scroll;
     overflow-x: hidden;
     width: 270px;
-    height: 100vh;
+    height: 100%;
     background-color: #313133;
     top: 40px;
     right: 0;
@@ -67,7 +67,7 @@
     transform: translateY(-4px);
 }
 
-.previewWrapper {
+.card_preview_wrapper {
     width: 100%;
     height: 200px;
     border-radius: 16px;
@@ -80,7 +80,7 @@
     align-items: start;
 }
 
-.previewContent {
+.card_preview_content {
     transform: scale(0.5);
     transform-origin: top left;
     width: 100%;
@@ -108,12 +108,12 @@
     border-radius: 8px;
 }
 
-.cardFooter {
+.card_footer {
     padding: 10px 16px;
     margin-bottom: 10px;
 }
 
-.cardTitle {
+.card_title {
     font-size: 16px;
     font-weight: 600;
     font-family: "Montserrat", sans-serif;

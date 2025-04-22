@@ -5,9 +5,9 @@ import TextPreview from "../TemplatePreview/TextPreview.jsx";
 const TemplateCard = ({template, onClick}) => {
     return (
         <div className={styles.card} onClick={() => onClick(template)}>
-            <div className={styles.previewWrapper}>
-                <div className={styles.previewContent}>
-                    {template.data.map(block => (
+            <div className={styles.card_preview_wrapper}>
+                <div className={styles.card_preview_content}>
+                    {template.template.map(block => (
                         <div key={block.id} className={styles.block}>
                             {block.type === 'text' && <TextPreview value={block.text}/>}
                             {block.type === 'image' && <img className={styles.block_img} src={block.src} alt="preview"/>}
@@ -15,8 +15,8 @@ const TemplateCard = ({template, onClick}) => {
                     ))}
                 </div>
             </div>
-            <div className={styles.cardFooter}>
-                <p className={styles.cardTitle}>{template.name}</p>
+            <div className={styles.card_footer}>
+                <p className={styles.card_title}>{template.name}</p>
             </div>
         </div>
     );

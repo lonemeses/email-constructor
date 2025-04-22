@@ -1,5 +1,5 @@
 import React from 'react';
-import MyTextarea from "../../UI/Textareas/MyTextarea.jsx";
+import Textarea from "../../UI/Textareas/Textarea.jsx";
 import styles from './TemplateEditor.module.css'
 
 const ImageEditor = ({block, labelTextChange}) => {
@@ -10,7 +10,7 @@ const ImageEditor = ({block, labelTextChange}) => {
                 <img src={block.src} alt={block.src} className={styles.img_elem}/>
             </div>
             <div style={{width: '600px'}}>
-                <MyTextarea value={block.label} onChange={labelTextChange}/>
+                <Textarea value={block.label} onChange={labelTextChange}/>
             </div>
         </div>
     );

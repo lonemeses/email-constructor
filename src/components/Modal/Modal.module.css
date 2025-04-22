@@ -29,7 +29,7 @@
     top: 10px;
 }
 
-.save_container {
+.save_wrapper {
     font-family: "Montserrat", sans-serif;
     width: 100%;
 }
@@ -39,23 +39,23 @@
     margin: 10px 0;
 }
 
-.uploader_wrapper {
+.image_uploader_wrapper {
     font-family: "Montserrat", sans-serif;
 }
 
-.uploader_title {
+.image_uploader_title {
     margin-bottom: 20px;
 }
 
-.uploader_btn {
+.image_uploader_btn {
     margin-top: 60px;
 }
 
-.uploader_label {
+.image_uploader_label {
     margin-top: 20px;
 }
 
-.uploader_close_btn {
+.image_uploader_close_btn {
     position: sticky;
     right: 1000px;
 }
