@@ -1,0 +1,33 @@
+.form_background {
+    font-family: "Montserrat", sans-serif;
+    display: flex;
+    height: 50rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.form_content {
+    display: flex;
+    flex-direction: column;
+    width: 600px;
+    height: 300px;
+    border: 2px solid gray;
+    padding: 15px 15px;
+}
+
+.form_link {
+    text-decoration: none;
+}
+
+.form_footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-bottom: 100px;
+}
+
+@media (min-width: 340px) {
+    .form_footer {
+        font-size: 18px;
+    }
+}
