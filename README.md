@@ -4,11 +4,9 @@
 
 ``git clone https://github.com/lonemeses/email-constructor.git``
 
-Затем запустите команды в следующем порядке
+Для поднятия Docker контейнера напишите
 
-`npm install`
-
-``npm run dev``
+``docker-compose up --build``
 
 # Пакеты используемые в приложении
 

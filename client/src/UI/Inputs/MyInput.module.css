@@ -1,0 +1,40 @@
+.input {
+    width: 100%;
+    font-size: 18px;
+    padding: 10px 10px 10px 5px;
+    display: block;
+    border: none;
+    border-bottom: 1px solid #757575;
+}
+
+.input_container {
+    position: relative;
+    display: flex;
+    height: 100px;
+    align-items: center;
+}
+.input_container:focus-within .label, .input_container .input:not(:placeholder-shown) + .label {
+    transform: translateY(-30px);
+    font-size:14px;
+    color: #000000;
+}
+
+.input:focus {outline: none}
+
+.label {
+    color: #999;
+    font-size: 14px;
+    font-weight: normal;
+    position: absolute;
+    pointer-events: none;
+    left: 5px;
+    top: 40px;
+    transition: all 0.5s ease;
+
+}
+
+@media (min-width: 370px) {
+    .label {
+        font-size: 18px;
+    }
+}

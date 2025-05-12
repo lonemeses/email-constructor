@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: app_server
+    ports:
+      - 3001:3001
+    volumes:
+      - ./server:/usr/src/app
+      - /usr/src/app/node_modules
+    environment:
+      - NODE_ENV=development
+
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: app_client
+    ports:
+      - 5000:5000
+    volumes:
+      - ./client:/usr/src/app
+      - /usr/src/app/node_modules
+    environment:
+      - VITE_BASE_URL=http://localhost:3001
+    depends_on:
+      - server
